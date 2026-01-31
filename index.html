@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Products - Enhanced</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Product Dashboard</h1>
+    <p class="subtitle">Quản lý sản phẩm chuyên nghiệp</p>
+  </header>
+
+  <!-- Loading State -->
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Đang tải dữ liệu...</p>
+  </div>
+
+  <!-- Error State -->
+  <div id="error" class="error" style="display: none;">
+    <p>❌ <span id="errorMessage"></span></p>
+    <button onclick="getAll()">Thử lại</button>
+  </div>
+
+  <!-- Main Content -->
+  <div id="mainContent" style="display: none;">
+    
+    <!-- Statistics -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-label">Tổng sản phẩm:</span>
+        <span class="stat-value" id="totalProducts">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Đang hiển thị:</span>
+        <span class="stat-value" id="displayedProducts">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Trang hiện tại:</span>
+        <span class="stat-value" id="currentPageStat">1</span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-container">
+        <input 
+          type="text" 
+          id="search" 
+          placeholder="Tìm kiếm theo tên sản phẩm..." 
+          autocomplete="off"
+        />
+        <button id="clearSearch" class="clear-btn" style="display: none;">✕</button>
+      </div>
+
+      <div class="filter-group">
+        <label for="pageSize">Hiển thị:</label>
+        <select id="pageSize">
+          <option value="5">5 sản phẩm</option>
+          <option value="10" selected>10 sản phẩm</option>
+          <option value="20">20 sản phẩm</option>
+          <option value="50">50 sản phẩm</option>
+        </select>
+      </div>
+
+      <div class="sort-group">
+        <button class="sort-btn" id="sortPriceBtn" onclick="sortBy('price')">
+          <span>Giá</span>
+          <span class="sort-icon" id="priceSortIcon">↕</span>
+        </button>
+        <button class="sort-btn" id="sortTitleBtn" onclick="sortBy('title')">
+          <span>Tên</span>
+          <span class="sort-icon" id="titleSortIcon">↕</span>
+        </button>
+        <button class="reset-btn" onclick="resetFilters()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th width="60">ID</th>
+            <th width="120">Hình ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th width="100">Giá</th>
+            <th width="150">Danh mục</th>
+            <th>Mô tả</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">🔍</div>
+        <h3>Không tìm thấy sản phẩm</h3>
+        <p>Thử điều chỉnh bộ lọc hoặc từ khóa tìm kiếm</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button class="page-btn" id="firstPageBtn" onclick="goToPage(1)">
+        ⏮ Đầu
+      </button>
+      <button class="page-btn" id="prevPageBtn" onclick="prevPage()">
+        ⬅ Trước
+      </button>
+      
+      <div class="page-numbers" id="pageNumbers"></div>
+      
+      <button class="page-btn" id="nextPageBtn" onclick="nextPage()">
+        Sau ➡
+      </button>
+      <button class="page-btn" id="lastPageBtn" onclick="goToLastPage()">
+        Cuối ⏭
+      </button>
+    </div>
+
+    <div class="page-info">
+      <span id="pageInfo">Trang 1 / 1</span>
+      <span class="separator">|</span>
+      <span id="rangeInfo">Hiển thị 1-10 / 100 sản phẩm</span>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
